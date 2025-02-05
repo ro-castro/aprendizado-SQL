@@ -1,0 +1,9 @@
+SELECT
+	*
+FROM
+	DIMPRODUCT
+
+SELECT
+	COUNT(DISTINCT COLORNAME) AS 'Cores Disponíveis'
+FROM
+	DimProduct

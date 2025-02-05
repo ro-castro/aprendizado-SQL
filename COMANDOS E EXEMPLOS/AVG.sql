@@ -1,0 +1,9 @@
+SELECT
+	*
+FROM
+	DIMCUSTOMER
+
+SELECT
+	AVG(YEARLYINCOME) AS 'Média anual de salário'
+FROM
+	DimCustomer
