@@ -68,3 +68,59 @@ WHERE
 	BirthDate >= @data
 ORDER BY 
 	Nascimento
+
+--Armazenando valor de SELECT em uma variável
+	--Exercício 3: Crie uma variável para armazenar a quantidade total de funcionários da tabela DimEmployee
+
+DECLARE
+	@varTotalFuncionarios int
+SET
+	@varTotalFuncionarios =
+		(SELECT
+			COUNT(EmployeeKey) 
+		FROM
+			DimEmployee)
+SELECT
+	@varTotalFuncionarios
+
+	--Exercício 4: Crie uma variável para armazenar a quantidade total de lojas com o Status 'Off'
+
+DECLARE
+	@varLojasFechadas int
+SET
+	@varLojasFechadas = 
+		(SELECT
+			COUNT(StoreKey)
+		FROM
+			DimStore
+		WHERE
+			Status = 'Off')
+SELECT
+	@varLojasFechadas
+
+--Armazenando um registro de uma consulta em uma variável
+	--Exercício 5: Qual é o nome do produto que teve a maior quantidade vendida em uma única venda da tabela FactSales
+
+DECLARE
+	@varIDdoProduto int,
+	@varQuantidadeVendida int
+
+	SELECT TOP (1)
+		@varIDdoProduto = ProductKey,
+		@varQuantidadeVendida = SalesQuantity
+	FROM
+		FactSales
+	ORDER BY
+		SalesQuantity DESC
+PRINT
+	'ID do produto mais vendido: ' + CAST(@varIDdoProduto AS varchar)
+PRINT
+	'Quantidade vendida: ' + CAST(@varQuantidadeVendida AS varchar)
+
+SELECT
+	ProductKey AS 'ID do Produto',
+	ProductName AS 'Produto'
+FROM
+	DimProduct
+WHERE
+	ProductKey = @varIDdoProduto
