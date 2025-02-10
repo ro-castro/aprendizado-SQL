@@ -124,3 +124,25 @@ FROM
 	DimProduct
 WHERE
 	ProductKey = @varIDdoProduto
+
+--Acumulando valores em uma variável
+	--Exercício 6: Printe na tela uma lisa com os nomes das funcionárias do departamento de Marketing
+
+DECLARE
+	@varListaNomes varchar (50)
+SET
+	@varListaNomes = '' --Atribui valor "vazio" para a variável
+
+SELECT
+	@varListaNomes = 
+		@varListaNomes + 
+		FirstName + --Adiciona o primeiro nome À variável
+		', ' + 
+		CHAR(10) --CHAR(10) comando para pular linha
+FROM
+	DimEmployee
+WHERE
+	Gender = 'F' and
+	DepartmentName = 'Marketing'
+PRINT
+	@varListaNomes
