@@ -14,8 +14,8 @@ SELECT
 		ELSE 5
 	END AS 'Desconto (%)',
 	CASE
-		WHEN ClassName = 'Economy' THEN ROUND((CAST(UnitPrice * .91 AS float)), 2)
-		WHEN ClassName = 'Regular' THEN ROUND((CAST(UnitPrice * .93 AS float)), 2)
+		WHEN ClassName = 'Economy' THEN ROUND((UnitPrice * .91), 2)
+		WHEN ClassName = 'Regular' THEN ROUND((UnitPrice * .93), 2)
 		ELSE ROUND((CAST(UnitPrice * .95 AS float)), 2)
 	END AS 'Preço com desconto'
 FROM
@@ -36,9 +36,9 @@ SELECT
 		ELSE @descontodeluxe
 	END AS 'Desconto (%)',
 	CASE
-		WHEN ClassName = 'Economy' THEN ROUND((CAST(UnitPrice * (1 - (@descontoeconomy / 100)) AS float)), 2)
-		WHEN ClassName = 'Regular' THEN ROUND((CAST(UnitPrice * (1 - (@descontoregular / 100)) AS float)), 2)
-		ELSE ROUND((CAST(UnitPrice * (1 - (@descontodeluxe / 100)) AS float)), 2)
+		WHEN ClassName = 'Economy' THEN ROUND((UnitPrice * (1 - (@descontoeconomy / 100))), 2)
+		WHEN ClassName = 'Regular' THEN ROUND((UnitPrice * (1 - (@descontoregular / 100))), 2)
+		ELSE ROUND((UnitPrice * (1 - (@descontodeluxe / 100))), 2)
 	END AS 'Preço com desconto'
 FROM
 	DimProduct
