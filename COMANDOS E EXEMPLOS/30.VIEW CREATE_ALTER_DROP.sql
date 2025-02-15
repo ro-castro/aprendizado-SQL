@@ -75,3 +75,24 @@ DROP VIEW
 
 DROP VIEW 
 	vwProdutos
+
+--Banco de Dados:
+
+CREATE DATABASE
+	BDTeste
+
+DROP DATABASE
+	BDTeste
+
+--Tabelas:
+
+CREATE TABLE 
+	Produtos_teste(
+		id_produto int,
+		nome_produto varchar (50),
+		data_validade date,
+		preco_produto decimal (6,2)
+
+DROP TABLE
+	Produtos_teste
+)
