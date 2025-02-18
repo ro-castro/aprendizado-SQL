@@ -1,5 +1,3 @@
---Manipular Views e Tabelas
-
 --SQL Views
 
 --Tabela virtual criada a partir de uma consulta de uma ou mais tabelas (ou mesmo de outras viewa) no banco de dados
@@ -30,6 +28,7 @@ FROM
 
 	/*Crie uma View contendo as seguintes informações da tabela DimProduct:
 	ProductKey, ProductName, ProductSubcategoryKey, BrandName e UnitPrice e nomeie vwProdutos.*/
+
 GO
 CREATE VIEW
 	vwProdutos AS
@@ -79,26 +78,5 @@ DROP VIEW
 DROP VIEW 
 	vwProdutos
 
---Antes de manipular tabelas, será criado um Banco de Dados para teste:
 
-CREATE DATABASE
-	BDTeste
-
---Caso seja necessário excluir, usar o comando DROP:
-
-DROP DATABASE
-	BDTeste
-
---Criar Tabelas:
-
-CREATE TABLE 
-	Produtos_teste(
-		id_produto int,
-		nome_produto varchar (50),
-		data_validade date,
-		preco_produto decimal (6,2)
-)
-
-DROP TABLE
-	Produtos_teste
 
