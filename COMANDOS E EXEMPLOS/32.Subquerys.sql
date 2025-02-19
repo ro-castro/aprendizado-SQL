@@ -18,9 +18,24 @@ SELECT
 FROM
 	tabela
 WHERE
-	coluna1 = (SELECT)
+	coluna1 = (SELECT) */
+
+--Consulte a DimProduct listando apenas produtos com custo acima damédia
+
+SELECT
+	*
+FROM
+	DimProduct
+WHERE
+	UnitCost > (
+		SELECT 
+			AVG(UnitCost) 
+		FROM 
+			DimProduct
+	)
+
 	
-	b.Subquery como um filtro dinâmico e em lista (vários valores)
+/*	b.Subquery como um filtro dinâmico e em lista (vários valores)
 
 SELECT
 	coluna1,
@@ -28,21 +43,72 @@ SELECT
 FROM
 	tabela
 WHERE
-	coluna1 IN (SELECT)
+	coluna1 IN (SELECT) */
 
-2. Subquery com SELECT, como uma nova coluna
+--Filtre a tabela DimProduct retornando apenas produtos das subcategorias 'Televisions' e 'Monitors'
+
+SELECT
+	*
+FROM
+	DimProduct
+WHERE
+	ProductSubcategoryKey IN (
+		SELECT 
+			ProductSubcategoryKey 
+		FROM 
+			DimProductSubcategory
+		WHERE 
+			ProductSubcategoryName IN ('Televisions', 'Monitors')
+	)
+
+/*2. Subquery com SELECT, como uma nova coluna
 
 SELECT
 	coluna1,
 	coluna2,
 	SELECT
 FROM
-	tabela
+	tabela */
 
-3. Subquery com FROM, como uma nova tabela
+--Retorne uma tabela com todos os produtos (ID Produto e Nome Produto) e o total de vendas para cada produto
+
+SELECT
+	ProductKey AS 'ID do Produto',
+	ProductName AS 'Nome do Produto',
+	(
+	SELECT
+		(COUNT(ProductKey))
+	FROM
+		FactSales
+	WHERE
+		FactSales.ProductKey = DimProduct.ProductKey) AS 'Total de Vendas'
+FROM
+	DimProduct
+
+/*3. Subquery com FROM, como uma nova tabela
 
 SELECT
 	coluna1,
 	coluna2
 FROM
-	(SELECT) AS T
+	(SELECT) AS T */
+
+--Retorne a quantidade de produtos da marca 'Contoso'
+
+SELECT	
+	COUNT(*) AS 'Número de produtos Contoso'
+FROM
+	DimProduct
+WHERE
+	BrandName = 'Contoso'
+
+SELECT
+	COUNT(*) AS 'Número de produtos Contoso'
+FROM
+	(SELECT	
+		*
+	FROM
+		DimProduct
+	WHERE
+		BrandName = 'Contoso') AS Tabela
+
