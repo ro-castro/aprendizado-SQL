@@ -112,3 +112,30 @@ FROM
 	WHERE
 		BrandName = 'Contoso') AS Tabela
 
+--Subquery aninhada (subquery dentro de outra subquery)
+
+--Descubra o nome dos clientes que ganham o segundo maior salário
+
+SELECT
+	FirstName AS 'Nome',
+	YearlyIncome AS 'Salário Anual'
+FROM
+	DimCustomer
+WHERE
+	YearlyIncome = (
+		SELECT
+			MAX(YearlyIncome)
+		FROM
+			DimCustomer
+		WHERE
+			YearlyIncome < (
+				SELECT
+					MAX(YearlyIncome)
+				FROM
+					DimCustomer
+				WHERE	
+					CustomerType = 'Person'
+		)
+	)
+
+
