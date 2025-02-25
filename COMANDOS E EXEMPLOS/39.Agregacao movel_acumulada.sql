@@ -60,6 +60,36 @@ SELECT
 	Data_Fechamento, 
 	MES_ANO, 
 	Faturamento_MM,
-	MAX(Faturamento_MM) OVER(ORDER BY Data_Fechamento ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS 'Média Móvel 2 linhas'
+	MAX(Faturamento_MM) OVER(ORDER BY Data_Fechamento ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS 'Máximo Móvel 2 linhas'
+FROM
+	Resultado
+
+	--Soma acumulada: UNBOUNDED considera desde a primeira linha
+
+SELECT
+	Data_Fechamento, 
+	MES_ANO, 
+	Faturamento_MM,
+	SUM(Faturamento_MM) OVER(ORDER BY Data_Fechamento ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS 'Soma Acumulada'
+FROM
+	Resultado
+
+	--Média Acumulada: Mesma lógica da soma acumulada
+
+SELECT
+	Data_Fechamento, 
+	MES_ANO, 
+	Faturamento_MM,
+	AVG(Faturamento_MM) OVER(ORDER BY Data_Fechamento ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS 'Média Acumulada'
+FROM
+	Resultado
+
+	--Máximo/Mínimo acumulado
+
+SELECT
+	Data_Fechamento, 
+	MES_ANO, 
+	Faturamento_MM,
+	MAX(Faturamento_MM) OVER(ORDER BY Data_Fechamento ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS 'Máximo Acumulado'
 FROM
 	Resultado
