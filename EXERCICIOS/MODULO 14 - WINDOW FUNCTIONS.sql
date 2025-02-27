@@ -67,3 +67,28 @@ FROM
 	vwProdutos
 WHERE
 	Marca = 'Contoso'
+
+--DESAFIO 1
+--Para responder os próximos 2 exercícios, você precisará criar uma View auxiliar. 
+--A sua view deve se chamar vwHistoricoLojas e deve conter um histórico com a quantidade de lojas abertas a cada Ano/Mês. Os desafios são: 
+--(1) Criar uma coluna de ID para essa View 
+--(2) Relacionar as tabelas DimDate e DimStore
+
+GO
+CREATE VIEW
+	vwHistoricoLojas AS
+		SELECT
+			ROW_NUMBER () OVER(ORDER BY CalendarMonth) AS 'ID',
+			CalendarYear AS 'Ano',
+			CalendarMonthLabel AS 'Mês',
+			COUNT (OpenDate) AS 'Quantidade de lojas'
+		FROM
+			DimDate
+		LEFT JOIN
+			DimStore
+		ON 
+			DimDate.Datekey = DimStore.OpenDate
+		GROUP BY 
+			CalendarMonth,
+			CalendarYear,
+			CalendarMonthLabel			
