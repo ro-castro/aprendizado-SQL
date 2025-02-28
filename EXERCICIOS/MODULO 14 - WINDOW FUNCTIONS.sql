@@ -91,4 +91,21 @@ CREATE VIEW
 		GROUP BY 
 			CalendarMonth,
 			CalendarYear,
-			CalendarMonthLabel			
+			CalendarMonthLabel	
+			
+/*5. A partir da view criada no exercício anterior, você deverá fazer uma soma móvel considerando sempre o mês atual + 2 meses para trás.*/
+
+SELECT
+	*,
+	SUM([Quantidade de lojas]) OVER(ORDER BY [ID] ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS 'Soma móvel 2 meses'
+FROM
+	vwHistoricoLojas
+
+/*6. Utilize a vwHistoricoLojas para calcular o acumulado de lojas abertas a cada ano/mês. */
+
+SELECT
+	*,
+	SUM([Quantidade de lojas]) OVER(ORDER BY [ID] ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS 'Acumulado'
+FROM
+	vwHistoricoLojas
+
